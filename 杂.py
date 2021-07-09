@@ -19,7 +19,7 @@ def 初始化画布(canvas, size=(5, 5), bg=1):
     --------
     """
 
-    if(not isinstance(size, tuple) or size==(0,0)):
+    if(not isinstance(size, tuple) or size == (0, 0)):
         print('初始化画布：参数错误，要求(N1,N2)，而你TM输入了' + str(size))
         return
 
@@ -80,3 +80,31 @@ def 初始化加载(textList=['加载资源', '加载操蛋', '加载你妈', '�
         time.sleep(0.01)
     os.system('cls')
 
+
+def 框之内否(*args):
+    """
+    @description  :判断(x0,y0)是否在(x1,y1)到(x2,y2)围成的框内
+    --------
+    @warning  :其中x1<x2,y1<y2 (左上到右下)
+    ---------
+    @param  :(int)*6 或 (tuple/list)*3
+    -------
+    @Returns  :(bool) 是否在框内
+    -------
+    """
+
+    if(len(args) == 3):
+        (x0, y0, x1, y1, x2, y2) = [
+            args[0][0], args[0][1],
+            args[1][0], args[1][1],
+            args[2][0], args[2][1]
+        ]
+    elif(len(args) == 6):
+        (x0, y0, x1, y1, x2, y2) = args
+    else:
+        raise AttributeError('-框之内否 参数异常-', args)
+
+    if(x1 < x0 < x2 and y1 < y0 < y2):
+        return True
+    else:
+        return False

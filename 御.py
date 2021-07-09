@@ -1,5 +1,6 @@
 import keyboard
 import time
+from 杂 import 框之内否
 
 if __name__ == '__main__':
     print("这TM是模块，单独运行有鸟用？！")
@@ -7,19 +8,21 @@ if __name__ == '__main__':
     exit()
 
 人坐标 = [0, 0]
-画布尺寸 = [[]]
+画布尺寸 = ()
+画布规范尺寸 = ()
 UP, DOWN, LEFT, RIGHT = 0, 1, 2, 3
 
 
-def 御_init(人坐标_, 画布尺寸_):
-    global 人坐标, 画布尺寸
+def 御_init(人坐标_, 画布尺寸_, 画布规范尺寸_):
+    global 人坐标, 画布尺寸,画布规范尺寸 
 
     人坐标 = 人坐标_
     画布尺寸 = 画布尺寸_
+    画布规范尺寸 = 画布规范尺寸_
 
 
 def 处理键盘事件():
-    global 人坐标, 画布尺寸
+    global 人坐标, 画布尺寸, 画布规范尺寸
 
     if keyboard.is_pressed('w'):
         print('Up    ')
@@ -35,7 +38,7 @@ def 处理键盘事件():
         移动(RIGHT)
     elif keyboard.is_pressed('c'):
         print('C     ')
-        人坐标 = [画布尺寸[1], 画布尺寸[0]//2]
+        人坐标 = [画布尺寸[1]//2, 画布尺寸[0]//2]
     elif keyboard.is_pressed('enter'):
         print('Enter!')
     elif keyboard.is_pressed('esc'):
@@ -49,9 +52,11 @@ def 移动(direc=0, step=1):
     人坐标[not direc//2] = {
         0: 人坐标[1] - step,
         1: 人坐标[1] + step,
-        2: 人坐标[0] - 2 * step,
-        3: 人坐标[0] + 2 * step
+        2: 人坐标[0] - step,
+        3: 人坐标[0] + step
     }[direc]
     
-    if(人坐标[0]>=画布尺寸[1] or 人坐标[1]>=画布尺寸[0]):
-        raise ValueError('越界')
+    # print(人坐标,画布尺寸)
+
+    if(not 框之内否(人坐标,(0,0),画布规范尺寸)):
+        raise ValueError('-sb 坐标越界异常-')
