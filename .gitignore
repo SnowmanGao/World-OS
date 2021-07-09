@@ -1,0 +1,15 @@
+
+__pycache__/图.cpython-39.pyc
+__pycache__/御.cpython-39.pyc
+__pycache__/杂.cpython-39.pyc
+__pycache__/枢.cpython-39.pyc
+__pycache__/示.cpython-39.pyc
+*.toc
+*.pkg
+dist/枢.exe
+build/枢/枢.exe.manifest
+build/枢/xref-枢.html
+build/枢/PYZ-00.pyz
+build/枢/base_library.zip
+build/枢/warn-枢.txt
+枢.spec
