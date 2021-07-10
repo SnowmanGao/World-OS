@@ -1,7 +1,9 @@
-import ctypes
-from tqdm import tqdm
-import time
 import os
+import ctypes
+import threading
+
+from tqdm import tqdm
+from time import sleep
 
 if __name__ == '__main__':
     print("这TM是模块，单独运行有鸟用？！")
@@ -13,7 +15,9 @@ def 初始化画布(canvas, size=(5, 5), bg=1):
     """
     @description  :生成纯块画布
     ---------
-    @param  :(list)canvas 画布 (x,y)size 画布大小，(int)bg 画布背景方块id
+    @param  :(any)canvas 画布 (x,y)size 画布大小，(int)bg 画布背景方块id
+    -------
+    @warning :canvas 的索引为 0 ~ x-1, 0 ~ y-1
     -------
     @return :(list) 处理完的画布
     --------
@@ -28,6 +32,14 @@ def 初始化画布(canvas, size=(5, 5), bg=1):
         canvas[i] = [bg] * size[1]
 
     return canvas
+
+
+def 初始化加载(textList=['加载资源', '加载操蛋', '加载你妈', '就绪...']):
+    pbar = tqdm(range(100))
+    for i in pbar:
+        pbar.set_description("Processing {0}".format(textList[i//30]))
+        sleep(0.01)
+    os.system('cls')
 
 
 def 转录(block_id):
@@ -50,6 +62,7 @@ def 转录(block_id):
     }[block_id]
 
 
+# <设置光标>
 class COORD(ctypes.Structure):
     _fields_ = [("X", ctypes.c_short), ("Y", ctypes.c_short)]
 
@@ -71,14 +84,7 @@ def 设置光标(x=0, y=0):
     """
 
     ctypes.windll.kernel32.SetConsoleCursorPosition(hOut, COORD(x, y))
-
-
-def 初始化加载(textList=['加载资源', '加载操蛋', '加载你妈', '就绪...']):
-    pbar = tqdm(range(100))
-    for i in pbar:
-        pbar.set_description("Processing {0}".format(textList[i//30]))
-        time.sleep(0.01)
-    os.system('cls')
+# <设置光标/>
 
 
 def 框之内否(*args):
@@ -104,7 +110,27 @@ def 框之内否(*args):
     else:
         raise AttributeError('-框之内否 参数异常-', args)
 
-    if(x1 < x0 < x2 and y1 < y0 < y2):
+    if(x1 <= x0 <= x2 and y1 <= y0 <= y2):
         return True
     else:
         return False
+
+
+class 线程(threading.Thread):
+    def __init__(self, threadID, name, function = lambda: 0):
+        '''
+        id 1~10 为我所用
+        '''
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.function = function
+        self.setDaemon(True)
+        # self.counter = counter
+
+    def run(self):
+        print("开始线程：" + self.name)
+        self.function()
+        print("退出线程：" + self.name)
+
+

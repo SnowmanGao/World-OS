@@ -1,6 +1,7 @@
+from time import sleep
 import keyboard
-import time
 from 杂 import 框之内否
+
 
 if __name__ == '__main__':
     print("这TM是模块，单独运行有鸟用？！")
@@ -21,30 +22,44 @@ def 御_init(人坐标_, 画布尺寸_, 画布规范尺寸_):
     画布规范尺寸 = 画布规范尺寸_
 
 
-def 处理键盘事件():
+def 设置人坐标(x,y):
+    global 人坐标
+    人坐标[0] = x
+    人坐标[1] = y
+
+
+def 键盘事件初始化():
     global 人坐标, 画布尺寸, 画布规范尺寸
 
+    keyboard.add_hotkey('c',lambda:(
+        # print('C     '),
+        设置人坐标(画布尺寸[1]//2, 画布尺寸[0]//2)
+    ))
+
+    keyboard.add_hotkey('enter',print,args=('Enter!'))
+    keyboard.add_hotkey('esc',lambda:(
+        print('Quit!   '),
+        sleep(0.5),
+        exit()
+    ))
+
+
+
+def 键盘事件处理():
+    
     if keyboard.is_pressed('w'):
-        print('Up    ')
+        # print('Up    ')
         移动(UP)
     elif keyboard.is_pressed('s'):
-        print('Down  ')
+        # print('Down  ')
         移动(DOWN)
     elif keyboard.is_pressed('a'):
-        print('Left  ')
+        # print('Left  ')
         移动(LEFT)
     elif keyboard.is_pressed('d'):
-        print('Right ')
+        # print('Right ')
         移动(RIGHT)
-    elif keyboard.is_pressed('c'):
-        print('C     ')
-        人坐标 = [画布尺寸[1]//2, 画布尺寸[0]//2]
-    elif keyboard.is_pressed('enter'):
-        print('Enter!')
-    elif keyboard.is_pressed('esc'):
-        print('Quit!   ')
-        time.sleep(0.5)
-        exit()
+    
 
 
 def 移动(direc=0, step=1):
